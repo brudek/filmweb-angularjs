@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Top 500 filmweb.pl</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/jquery-1.12.3.js"></script>
+	<style>
+		.center-block{
+			float:none;
+		}
+		#someelem
+    {
+    cursor: pointer;
+    }
+
+.tooltip
+    {
+    display: block;
+   color:black;
+    background-color: red;
+    padding: 5px;
+    }
+	</style>
+</head>
+<body >
+	
+	<div class="container" ng-app="aplikacja">
+
+		
+		
+		<div class="row"  ng-controller= "kontrolerFilmow">
+			<div class="col-sm-12 center-block">
+				<h1 class="text-center">Ranking filmów portalu fimweb.pl</h1>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon">
+						Szukaj:
+					</span>
+					<input type="text" class="form-control" placeholder="Wpisz tytuł" ng-model="wyszukiwarka">
+				</div>
+				
+				<br>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th ng-repeat="naglowek in [
+									'Pozycja', 'Tytuł', 'Liczba głosów']">{{naglowek}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr  ng-repeat="film in filmy | filter : wyszukiwarka">
+								<td>{{film.pozycja}}</td>
+								<td><strong>{{film.tytul}}</strong></td>
+								<td>{{film.liczbaglosow}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	
+	
+	</div>
+
+	<!--Skrypty-->
+	<script src="js/angular.min.js"></script>
+	
+	<script>
+		
+		var app = angular.module( 'aplikacja', [] );
+
+		app.controller('kontrolerFilmow', [ '$scope', '$http', '$filter', function($scope, $http, $filter){
+				
+
+				$http.get('data.json').success(function(data){
+					$scope.filmy = data;
+				})
+			}]);
+		
+	</script>
+	
+	<script>
+	
+	</script>
+	
+	
+	
+	<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
